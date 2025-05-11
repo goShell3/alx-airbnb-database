@@ -1,0 +1,1 @@
+ERD-User to Booking, Property to Booking
