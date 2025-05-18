@@ -27,6 +27,7 @@ LEFT JOIN
 ORDER BY 
     b.start_date DESC;
 
+AND
 
 
 -- Analyze the query performance
