@@ -24,3 +24,19 @@ CREATE INDEX idx_reviews_rating ON Reviews(rating);
 -- Payments table indexes
 CREATE INDEX idx_payments_booking ON Payments(booking_id);
 CREATE INDEX idx_payments_date ON Payments(payment_date);
+
+
+-- Run the same EXPLAIN ANALYZE after creating indexes
+EXPLAIN ANALYZE
+SELECT u.*, COUNT(b.booking_id) AS booking_count
+FROM Users u
+LEFT JOIN Bookings b ON u.user_id = b.user_id
+GROUP BY u.user_id;
+
+
+-- Example: Check query plan for user bookings
+EXPLAIN ANALYZE
+SELECT u.*, COUNT(b.booking_id) AS booking_count
+FROM Users u
+LEFT JOIN Bookings b ON u.user_id = b.user_id
+GROUP BY u.user_id;
