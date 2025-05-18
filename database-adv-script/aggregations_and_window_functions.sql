@@ -28,3 +28,19 @@ GROUP BY
     p.property_id, p.name, p.location
 ORDER BY 
     booking_rank;
+
+
+SELECT 
+    p.property_id,
+    p.name,
+    p.location,
+    COUNT(b.booking_id) AS booking_count,
+    RANK() OVER (ORDER BY COUNT(b.booking_id) DESC) AS popularity_rank
+FROM 
+    Properties p
+LEFT JOIN 
+    Bookings b ON p.property_id = b.property_id
+GROUP BY 
+    p.property_id, p.name, p.location
+ORDER BY 
+    popularity_rank;
