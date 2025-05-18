@@ -10,6 +10,15 @@ SELECT p.*
 FROM Properties p
 JOIN RatedProperties rp ON p.property_id = rp.property_id;
 
+SELECT p.*
+FROM Properties p
+WHERE p.property_id IN (
+    SELECT r.property_id
+    FROM Reviews r
+    GROUP BY r.property_id
+    HAVING AVG(r.rating) > 4.0
+);
+
 -- Write a correlated subquery to find users who have made more than 3 bookings.
 
 WITH UserBookingCounts AS (
@@ -21,3 +30,11 @@ WITH UserBookingCounts AS (
 SELECT u.*
 FROM Users u
 JOIN UserBookingCounts ubc ON u.user_id = ubc.user_id;
+
+SELECT u.*
+FROM Users u
+WHERE (
+    SELECT COUNT(*)
+    FROM Bookings b
+    WHERE b.user_id = u.user_id
+) > 3;
